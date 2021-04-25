@@ -6,6 +6,8 @@ import ptBR from 'date-fns/locale/pt-BR'
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
 import Link from 'next/link'
 import styles from './home.module.scss';
+import { useContext } from 'react';
+import { PlayerContext } from '../contexts/PlayerContext';
 
 
 type Episode = {
@@ -24,6 +26,7 @@ type HomeProps = {
   allEpisodes: Episode[];
 }
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+  const { play } = useContext(PlayerContext)
 
   return (
     <div className={styles.homepage}>
@@ -36,14 +39,14 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 <Image width={192} height={192} src={episode.thumbnail} alt={episode.title} objectFit="cover" />
                 <div className={styles.episodeDetails}>
                   <Link href={`/episodes/${episode.id}`}>
-                  <a >{episode.title}</a>
+                    <a >{episode.title}</a>
                   </Link>
                   <p>{episode.members}</p>
                   <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
                 </div>
 
-                <button type="button">
+                <button type="button" onClick={() => play(episode)}>
                   <img src="/play-green.svg" alt="Tocar episodio" />
                 </button>
               </li>
@@ -57,12 +60,12 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
         <table cellSpacing={0}>
           <thead>
             <tr>
-            <th></th>
-            <th>Podcast</th>
-            <th>Integrantes</th>
-            <th>Data</th>
-            <th>Duração</th>
-            <th></th>
+              <th></th>
+              <th>Podcast</th>
+              <th>Integrantes</th>
+              <th>Data</th>
+              <th>Duração</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -80,7 +83,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   </td>
                   <td>
                     <Link href={`/episodes/${episode.id}`}>
-                    <a>{episode.title}</a>
+                      <a>{episode.title}</a>
                     </Link>
                   </td>
                   <td>{episode.members}</td>
