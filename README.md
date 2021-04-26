@@ -39,7 +39,7 @@ Follow the steps below
 
 ```bash
 # Install the dependencies
-$ yarn
+$ yarn install
 ```
 
 ou
